@@ -1,0 +1,16 @@
+dataset,regime,model,alpha,gamma,seed,rounds,tail,diverged,death_round,overall_tail,worst_group,worst_group_tail,group_tail_tier1,group_tail_tier2,group_tail_tier3,group_tail_tier4,group_tail_tier5,file
+imdbwiki,infeasible,fedavg,,,0,4000,500,0,,105.251,tier2,113.545,100.311,113.545,85.2215,71.9001,85.4914,imdbwiki_infeasible_fedavg_seed0.csv.gz
+imdbwiki,infeasible,fedavg,,,1,4000,500,0,,106.081,tier2,113.682,101.286,113.682,87.0274,72.8945,85.1266,imdbwiki_infeasible_fedavg_seed1.csv.gz
+imdbwiki,infeasible,fedavg,,,2,4000,500,0,,106.579,tier2,114.402,101.809,114.402,87.6611,72.4518,84.6425,imdbwiki_infeasible_fedavg_seed2.csv.gz
+imdbwiki,infeasible,fedavg,,,3,4000,500,0,,105.896,tier2,113.812,100.667,113.812,87.4821,72.0305,85.6775,imdbwiki_infeasible_fedavg_seed3.csv.gz
+imdbwiki,infeasible,fedavg,,,4,4000,500,0,,106.778,tier2,114.064,102.228,114.064,87.406,73.2255,84.4603,imdbwiki_infeasible_fedavg_seed4.csv.gz
+imdbwiki,infeasible,fedavot,,,0,4000,500,0,,108.536,tier2,111.793,105.721,111.793,78.9143,63.1644,107.29,imdbwiki_infeasible_fedavot_seed0.csv.gz
+imdbwiki,infeasible,fedavot,,,1,4000,500,0,,107.825,tier2,110.286,104.472,110.286,81.2923,62.7585,107.616,imdbwiki_infeasible_fedavot_seed1.csv.gz
+imdbwiki,infeasible,fedavot,,,2,4000,500,0,,108.828,tier2,111.723,105.933,111.723,82.2826,62.9014,104.747,imdbwiki_infeasible_fedavot_seed2.csv.gz
+imdbwiki,infeasible,fedavot,,,3,4000,500,0,,108.167,tier2,110.448,105.009,110.448,82.0104,62.9107,105.966,imdbwiki_infeasible_fedavot_seed3.csv.gz
+imdbwiki,infeasible,fedavot,,,4,4000,500,0,,108.633,tier2,109.636,106.277,109.636,83.2262,63.2266,106.68,imdbwiki_infeasible_fedavot_seed4.csv.gz
+imdbwiki,infeasible,full,,,0,4000,500,0,,82.9485,tier5,116.685,72.2286,97.2311,91.0512,90.3402,116.685,imdbwiki_infeasible_full_seed0.csv.gz
+imdbwiki,infeasible,full,,,1,4000,500,0,,82.9485,tier5,116.685,72.2286,97.2311,91.0512,90.3402,116.685,imdbwiki_infeasible_full_seed1.csv.gz
+imdbwiki,infeasible,full,,,2,4000,500,0,,82.9485,tier5,116.685,72.2286,97.2311,91.0512,90.3402,116.685,imdbwiki_infeasible_full_seed2.csv.gz
+imdbwiki,infeasible,full,,,3,4000,500,0,,82.9485,tier5,116.685,72.2286,97.2311,91.0512,90.3402,116.685,imdbwiki_infeasible_full_seed3.csv.gz
+imdbwiki,infeasible,full,,,4,4000,500,0,,82.9485,tier5,116.685,72.2286,97.2311,91.0512,90.3402,116.685,imdbwiki_infeasible_full_seed4.csv.gz

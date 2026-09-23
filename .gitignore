@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+results/runs/logs/
+results/runs/**/*.csv.gz
+results/runs/**/*.csv
+!results/runs/**/summary.csv
+results/runs/**/*.npz
+results/runs/default/
+data/imdb_wiki.csv
+data/imdb_embeddings.npy

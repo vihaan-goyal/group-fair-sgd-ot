@@ -1,0 +1,16 @@
+dataset,regime,model,alpha,gamma,seed,rounds,tail,diverged,death_round,overall_tail,worst_group,worst_group_tail,group_tail_White,group_tail_Black,group_tail_Asian-Pac-Islander,group_tail_Amer-Indian-Eskimo,group_tail_Other,file
+adult,infeasible,fedavg,,,0,4000,500,0,,0.221413,Asian-Pac-Islander,0.362285,0.340102,0.181397,0.362285,0.168098,0.0551832,adult_infeasible_fedavg_seed0.csv.gz
+adult,infeasible,fedavg,,,1,4000,500,0,,0.221711,Asian-Pac-Islander,0.362629,0.339498,0.183571,0.362629,0.165901,0.0569557,adult_infeasible_fedavg_seed1.csv.gz
+adult,infeasible,fedavg,,,2,4000,500,0,,0.222259,Asian-Pac-Islander,0.361398,0.339552,0.181455,0.361398,0.167272,0.0616151,adult_infeasible_fedavg_seed2.csv.gz
+adult,infeasible,fedavg,,,3,4000,500,0,,0.220864,Asian-Pac-Islander,0.360307,0.34096,0.180847,0.360307,0.165621,0.0565829,adult_infeasible_fedavg_seed3.csv.gz
+adult,infeasible,fedavg,,,4,4000,500,0,,0.219778,Asian-Pac-Islander,0.359472,0.341722,0.18036,0.359472,0.159354,0.0579821,adult_infeasible_fedavg_seed4.csv.gz
+adult,infeasible,fedavot,,,0,4000,500,0,,0.207742,White,0.375611,0.375611,0.174345,0.320794,0.134993,0.0329656,adult_infeasible_fedavot_seed0.csv.gz
+adult,infeasible,fedavot,,,1,4000,500,0,,0.207958,White,0.373617,0.373617,0.176427,0.324828,0.129709,0.0352088,adult_infeasible_fedavot_seed1.csv.gz
+adult,infeasible,fedavot,,,2,4000,500,0,,0.207827,White,0.372729,0.372729,0.171209,0.3261,0.132224,0.0368735,adult_infeasible_fedavot_seed2.csv.gz
+adult,infeasible,fedavot,,,3,4000,500,0,,0.207797,White,0.375256,0.375256,0.172546,0.323124,0.133647,0.0344145,adult_infeasible_fedavot_seed3.csv.gz
+adult,infeasible,fedavot,,,4,4000,500,0,,0.207566,White,0.379262,0.379262,0.174714,0.318082,0.128973,0.0367979,adult_infeasible_fedavot_seed4.csv.gz
+adult,infeasible,full,,,0,4000,500,0,,0.207304,White,0.378582,0.378582,0.17684,0.327462,0.122714,0.0309206,adult_infeasible_full_seed0.csv.gz
+adult,infeasible,full,,,1,4000,500,0,,0.207304,White,0.378582,0.378582,0.17684,0.327462,0.122714,0.0309206,adult_infeasible_full_seed1.csv.gz
+adult,infeasible,full,,,2,4000,500,0,,0.207304,White,0.378582,0.378582,0.17684,0.327462,0.122714,0.0309206,adult_infeasible_full_seed2.csv.gz
+adult,infeasible,full,,,3,4000,500,0,,0.207304,White,0.378582,0.378582,0.17684,0.327462,0.122714,0.0309206,adult_infeasible_full_seed3.csv.gz
+adult,infeasible,full,,,4,4000,500,0,,0.207304,White,0.378582,0.378582,0.17684,0.327462,0.122714,0.0309206,adult_infeasible_full_seed4.csv.gz
