@@ -33,8 +33,7 @@ python src/plot_figures.py     # figures/severity_imdb.pdf, severity_adult.pdf, 
 | Table 2 | IMDb-Wiki sweep, Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
 | Sec. 5 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
 | Fig. 2 | IMDb-Wiki: $F_p$ vs $\nu$, constant vs decaying stepsize, with floors $\Phi$ | `src/plot_figures.py` | `results/tables/severity_sweep_table.csv` |
-| Fig. 3 | Adult: $F_p$ vs sampling skew $\beta$, same layout | `src/plot_figures.py` | same |
-| Fig. 4 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_figures.py` | `results/tables/rare_group_table.csv` |
+| Fig. 3 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_figures.py` | `results/tables/rare_group_table.csv` |
 | floors $\Phi$, $\nu$, $\hat p$ | exact loss floor each rule converges toward | `src/build_tables.py` + `src/transport_floors.py` | raw runs + data |
 | IPFP cap | 1000 IPFP sweeps already give the limiting $\hat p$ | `src/ipfp_limit_check.py` | data |
 
@@ -103,7 +102,8 @@ src/run_experiments.py     training runner (all rules, vectorized over configs)
 src/transport_floors.py    p_hat, p_tilde, nu and exact floors from a cached transport plan
 src/build_tables.py        raw runs -> results/tables/*.csv
 src/paper_tables.py        Tables 1-2, Welch t, CVaR grid results
-src/plot_figures.py        Figs. 2-4
+src/plot_severity_1x4.py   Fig. 2 (1x4 row)
+src/plot_figures.py        Fig. 3, and Fig. 2 as two separate figures
 src/ipfp_limit_check.py    IPFP cap check
 experiments/*.sh           the runs behind the paper
 results/runs/<cell>/       summary.csv per cell (tail-500 statistics per rule and seed)
