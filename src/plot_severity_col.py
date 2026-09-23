@@ -39,7 +39,7 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
     ax.tick_params(labelsize=FS, pad=2, length=3)
     ax.grid(True, ls="--", lw=0.6, alpha=0.45); ax.set_axisbelow(True)
     ax.margins(y=0.15)
-    ax.set_yticks([80, 100, 120] if ds == "imdbwiki" else [0.20, 0.22, 0.24])
+    ax.set_yticks([80, 90, 100, 110, 120] if ds == "imdbwiki" else [0.20, 0.21, 0.22, 0.23, 0.24, 0.25])
     if ds == "adult":
         ax.yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
     if k in (0, 2):
