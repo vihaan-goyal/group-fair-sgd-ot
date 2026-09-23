@@ -14,6 +14,6 @@ keeps the first 100 identities (the `nmXXXXXXX` id in the path) with at least 30
 SHA-256:
 
 ```
-90f9e18dc3f5d91f710193987266c677d5ba08fe3f1d88b3001583781dd57bc1  imdb_wiki.csv
+3bae6010275e967defaeb0cce60b854c888d95e00cf52e1df33d3fd85be69ebd  imdb_wiki.csv   (LF line endings; a Windows checkout with autocrlf gives CRLF)
 8790e5b03f3f437d2c3e93d483f566db2c5a4fe71e26c16ac2d30765de13c522  imdb_embeddings.npy
 ```
