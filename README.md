@@ -11,7 +11,7 @@ distribution. When the target is reachable (every $p_i \le r_i$, $r_i$ = inclusi
 $F_p$ exactly. When it is not, transport converges to the closest reachable surrogate $\hat p$. The *infeasible mass*
 $\nu=\sum_{p_i>r_i}p_i$ measures how far the target is out of reach.
 
-Everything in Sec. 5 of the paper (Tables 1–2, Figs. 2–4, every quoted number and $t$ statistic) comes from this
+Everything in Sec. 5 of the paper (Tables 1–2, Figs. 2–3, every quoted number and $t$ statistic) comes from this
 repository.
 
 ## Quick start: tables and figures without training
@@ -22,7 +22,8 @@ in `results/tables/`. So the paper's numbers and plots regenerate in seconds:
 ```bash
 pip install -r requirements.txt
 python src/paper_tables.py     # Table 1, Table 2, all Welch t, the mean-CVaR grid results
-python src/plot_figures.py     # figures/severity_imdb.pdf, severity_adult.pdf, rare_group_fit.pdf
+python src/plot_severity_1x4.py # figures/severity_1x4.pdf (Fig. 2)
+python src/plot_figures.py     # figures/rare_group_fit.pdf (Fig. 3), severity_imdb.pdf, severity_adult.pdf
 ```
 
 ## Where each result comes from
@@ -32,7 +33,8 @@ python src/plot_figures.py     # figures/severity_imdb.pdf, severity_adult.pdf, 
 | Table 1 | overall $F_p$ on the four headline instances, all rules | `src/paper_tables.py` | `results/runs/*/summary.csv` |
 | Table 2 | IMDb-Wiki sweep, Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
 | Sec. 5 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
-| Fig. 2 | IMDb-Wiki: $F_p$ vs $\nu$, constant vs decaying stepsize, with floors $\Phi$ | `src/plot_figures.py` | `results/tables/severity_sweep_table.csv` |
+| Fig. 2 | both severity sweeps in one row: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_1x4.py` | `results/tables/severity_sweep_table.csv` |
+| (Fig. 2, split) | the same sweeps as two full-width figures | `src/plot_figures.py` | same |
 | Fig. 3 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_figures.py` | `results/tables/rare_group_table.csv` |
 | floors $\Phi$, $\nu$, $\hat p$ | exact loss floor each rule converges toward | `src/build_tables.py` + `src/transport_floors.py` | raw runs + data |
 | IPFP cap | 1000 IPFP sweeps already give the limiting $\hat p$ | `src/ipfp_limit_check.py` | data |
@@ -82,6 +84,7 @@ bash experiments/baselines.sh          # m/K, upsampling, downsampling, LDS on t
 bash experiments/cvar_grid.sh          # 10x10 (alpha, gamma) mean-CVaR grid on the four headline cells
 python src/build_tables.py             # results/tables/*.csv (floors, nu, rare-group losses)
 python src/paper_tables.py
+python src/plot_severity_1x4.py
 python src/plot_figures.py
 ```
 
