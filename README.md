@@ -107,6 +107,7 @@ src/build_tables.py        raw runs -> results/tables/*.csv
 src/paper_tables.py        Tables 1-2, Welch t, CVaR grid results
 src/plot_severity_1x4.py   Fig. 2 (1x4 row)
 src/plot_severity_2x2.py   Fig. 2 (2x2 grid variant)
+src/plot_severity_col.py   Fig. 2 (single-column, four stacked panels)
 src/plot_figures.py        Fig. 3, and Fig. 2 as two separate figures
 src/ipfp_limit_check.py    IPFP cap check
 experiments/*.sh           the runs behind the paper
