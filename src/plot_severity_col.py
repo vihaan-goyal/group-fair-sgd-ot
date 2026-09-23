@@ -17,9 +17,9 @@ LBL = {"fedavot": "GAVOT", "fedavg": "group-blind avg.", "full": "full"}
 STEP = {"const": r"constant $\eta$", "decay1000": r"decaying $\eta_t$"}
 rows = list(csv.DictReader(open("results/tables/severity_sweep_table.csv")))
 
-fig = plt.figure(figsize=(3.4, 6.4))
+fig = plt.figure(figsize=(3.4, 5.9))
 gs = fig.add_gridspec(5, 1, height_ratios=[1, 1, 0.38, 1, 1], hspace=0.42,
-                      left=0.185, right=0.975, top=0.855, bottom=0.095)
+                      left=0.185, right=0.975, top=0.955, bottom=0.10)
 a0 = fig.add_subplot(gs[0]); a2 = fig.add_subplot(gs[3])
 axes = [a0, fig.add_subplot(gs[1], sharex=a0, sharey=a0), a2, fig.add_subplot(gs[4], sharex=a2, sharey=a2)]
 panels = [("imdbwiki", "const"), ("imdbwiki", "decay1000"), ("adult", "const"), ("adult", "decay1000")]
@@ -37,6 +37,7 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
     ax.set_title(("IMDb-Wiki, " if ds == "imdbwiki" else "Adult, ") + STEP[tag], fontsize=FS, pad=3)
     ax.set_ylabel(r"$F_p$ (MSE)" if ds == "imdbwiki" else r"$F_p$ (CE)", fontsize=FS, labelpad=2)
     ax.tick_params(labelsize=FS, pad=2, length=3)
+    ax.grid(True, ls="--", lw=0.6, alpha=0.45); ax.set_axisbelow(True)
     ax.margins(y=0.15)
     ax.set_yticks([80, 100, 120] if ds == "imdbwiki" else [0.20, 0.22, 0.24])
     if ds == "adult":
@@ -50,11 +51,16 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
     if k == 1:
         ax.set_xlabel(r"infeasible mass $\nu$ (%)", fontsize=FS, labelpad=2)
 
-handles = [Line2D([], [], color=COL[m], marker=MK[m], ms=3.5, lw=1.3, label=LBL[m]) for m in LBL] + \
-          [Line2D([], [], color="0.35", lw=1.3, label="measured"),
-           Line2D([], [], color="0.35", ls="--", lw=1.0, label=r"floor $\Phi$")]
-fig.legend(handles=handles, loc="upper center", ncol=2, fontsize=FS, frameon=True, fancybox=False, edgecolor="0.6",
-           bbox_to_anchor=(0.58, 0.997), handlelength=1.6, columnspacing=0.8, handletextpad=0.4, borderaxespad=0.1)
+# legends inside the panels, in the empty upper-left corners: the rules on IMDb-Wiki, the line styles on Adult
+axes[0].set_ylim(76, 128)
+axes[1].legend(handles=[Line2D([], [], color=COL[m], marker=MK[m], ms=3.5, lw=1.3, label=LBL[m]) for m in LBL],
+               loc="upper center", ncol=3, fontsize=FS, framealpha=0.9, handlelength=1.4, handletextpad=0.3,
+               columnspacing=0.7,
+               borderpad=0.3, labelspacing=0.2)
+axes[2].legend(handles=[Line2D([], [], color="0.35", lw=1.3, label="measured"),
+                        Line2D([], [], color="0.35", ls="--", lw=1.0, label=r"floor $\Phi$")],
+               loc="upper left", fontsize=FS, framealpha=0.9, handlelength=1.6, handletextpad=0.4,
+               borderpad=0.3, labelspacing=0.2)
 os.makedirs("figures", exist_ok=True)
 fig.savefig("figures/severity_col.pdf")
 fig.savefig("figures/severity_col.png", dpi=200)
