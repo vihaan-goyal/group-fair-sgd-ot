@@ -1,7 +1,7 @@
 # Paper Fig. 2, single-column variant: the four severity panels stacked (IMDb-Wiki constant / decaying
 # stepsize vs infeasible mass nu, then Adult constant / decaying vs skew beta), each pair sharing its x axis.
 # Solid = tail-500 F_p mean over 5 seeds (+-1 std), dashed = exact floor Phi of each rule.
-# 3.4 in wide for \columnwidth, text at 9.3 pt (ICASSP kit: >= 9 pt as printed), TrueType fonts.
+# 3.4 in wide for \columnwidth, 7.5 pt text as printed, TrueType fonts.
 # Usage (repo root): python src/plot_severity_col.py
 import csv, os
 import matplotlib; matplotlib.use("Agg")
@@ -10,16 +10,16 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import MaxNLocator, FormatStrFormatter
 plt.rcParams["pdf.fonttype"] = 42
 
-FS = 9.3
+FS = 7.5
 COL = {"fedavot": "tab:blue", "fedavg": "tab:orange", "full": "tab:red"}
 MK = {"fedavot": "o", "fedavg": "s", "full": "^"}
 LBL = {"fedavot": "GAVOT", "fedavg": "group-blind avg.", "full": "full"}
 STEP = {"const": r"constant $\eta$", "decay1000": r"decaying $\eta_t$"}
 rows = list(csv.DictReader(open("results/tables/severity_sweep_table.csv")))
 
-fig = plt.figure(figsize=(3.4, 6.1))
-gs = fig.add_gridspec(5, 1, height_ratios=[1, 1, 0.22, 1, 1], hspace=0.36,
-                      left=0.185, right=0.975, top=0.96, bottom=0.095)
+fig = plt.figure(figsize=(3.4, 5.0))
+gs = fig.add_gridspec(5, 1, height_ratios=[1, 1, 0.2, 1, 1], hspace=0.34,
+                      left=0.15, right=0.98, top=0.96, bottom=0.10)
 a0 = fig.add_subplot(gs[0]); a2 = fig.add_subplot(gs[3])
 axes = [a0, fig.add_subplot(gs[1], sharex=a0, sharey=a0), a2, fig.add_subplot(gs[4], sharex=a2, sharey=a2)]
 panels = [("imdbwiki", "const"), ("imdbwiki", "decay1000"), ("adult", "const"), ("adult", "decay1000")]
@@ -31,7 +31,7 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
         pts.sort(key=lambda r: -float(r["beta"])); x = [float(r["beta"]) for r in pts]
     for m in ["full", "fedavg", "fedavot"]:
         y = [float(r[f"meas_{m}"]) for r in pts]; s = [float(r[f"std_{m}"]) for r in pts]
-        ax.errorbar(x, y, yerr=s, color=COL[m], marker=MK[m], ms=3, lw=1.3, capsize=1.5, zorder=3)
+        ax.errorbar(x, y, yerr=s, color=COL[m], marker=MK[m], ms=2.5, lw=1.1, capsize=1.2, zorder=3)
         if m != "full":
             ax.plot(x, [float(r[f"floor_{m}"]) for r in pts], color=COL[m], ls="--", lw=1.0, zorder=2)
     ax.set_title(("IMDb-Wiki, " if ds == "imdbwiki" else "Adult, ") + STEP[tag], fontsize=FS, pad=3)
@@ -55,7 +55,7 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
 
 # legends inside the panels, in the empty upper-left corners: the rules on IMDb-Wiki, the line styles on Adult
 axes[0].set_ylim(76, 128)
-axes[1].legend(handles=[Line2D([], [], color=COL[m], marker=MK[m], ms=3.5, lw=1.3, label=LBL[m]) for m in LBL],
+axes[1].legend(handles=[Line2D([], [], color=COL[m], marker=MK[m], ms=3, lw=1.1, label=LBL[m]) for m in LBL],
                loc="upper center", ncol=3, fontsize=FS, framealpha=0.9, handlelength=1.4, handletextpad=0.3,
                columnspacing=0.7,
                borderpad=0.3, labelspacing=0.2)

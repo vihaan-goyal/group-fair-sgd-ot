@@ -22,8 +22,8 @@ in `results/tables/`. So the paper's numbers and plots regenerate in seconds:
 ```bash
 pip install -r requirements.txt
 python src/paper_tables.py     # Table 1, Table 2, all Welch t, the mean-CVaR grid results
-python src/plot_severity_1x4.py # figures/severity_1x4.pdf (Fig. 2)
-python src/plot_figures.py     # figures/rare_group_fit.pdf (Fig. 3), severity_imdb.pdf, severity_adult.pdf
+python src/plot_severity_col.py # figures/severity_col.pdf (Fig. 2)
+python src/plot_rare_group.py  # figures/rare_group_fit.pdf (Fig. 3)
 ```
 
 ## Where each result comes from
@@ -33,9 +33,9 @@ python src/plot_figures.py     # figures/rare_group_fit.pdf (Fig. 3), severity_i
 | Table 1 | overall $F_p$ on the four headline instances, all rules | `src/paper_tables.py` | `results/runs/*/summary.csv` |
 | Table 2 | IMDb-Wiki sweep, Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
 | Sec. 5 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
-| Fig. 2 | both severity sweeps in one row: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_1x4.py` | `results/tables/severity_sweep_table.csv` |
+| Fig. 2 | both severity sweeps, four stacked panels: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_col.py` | `results/tables/severity_sweep_table.csv` |
 | (Fig. 2, split) | the same sweeps as two full-width figures | `src/plot_figures.py` | same |
-| Fig. 3 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_figures.py` | `results/tables/rare_group_table.csv` |
+| Fig. 3 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_rare_group.py` | `results/tables/rare_group_table.csv` |
 | floors $\Phi$, $\nu$, $\hat p$ | exact loss floor each rule converges toward | `src/build_tables.py` + `src/transport_floors.py` | raw runs + data |
 | IPFP cap | 1000 IPFP sweeps already give the limiting $\hat p$ | `src/ipfp_limit_check.py` | data |
 
@@ -84,8 +84,8 @@ bash experiments/baselines.sh          # m/K, upsampling, downsampling, LDS on t
 bash experiments/cvar_grid.sh          # 10x10 (alpha, gamma) mean-CVaR grid on the four headline cells
 python src/build_tables.py             # results/tables/*.csv (floors, nu, rare-group losses)
 python src/paper_tables.py
-python src/plot_severity_1x4.py
-python src/plot_figures.py
+python src/plot_severity_col.py
+python src/plot_rare_group.py
 ```
 
 Everything runs on a CPU. `src/run_experiments.py --help` lists all options; `--smoke` gives a one-minute IMDb-Wiki check and
@@ -105,10 +105,11 @@ src/run_experiments.py     training runner (all rules, vectorized over configs)
 src/transport_floors.py    p_hat, p_tilde, nu and exact floors from a cached transport plan
 src/build_tables.py        raw runs -> results/tables/*.csv
 src/paper_tables.py        Tables 1-2, Welch t, CVaR grid results
-src/plot_severity_1x4.py   Fig. 2 (1x4 row)
-src/plot_severity_2x2.py   Fig. 2 (2x2 grid variant)
-src/plot_severity_col.py   Fig. 2 (single-column, four stacked panels)
-src/plot_figures.py        Fig. 3, and Fig. 2 as two separate figures
+src/plot_severity_col.py   Fig. 2 (paper version, one column)
+src/plot_rare_group.py     Fig. 3
+src/plot_severity_1x4.py   Fig. 2 alternative (1x4 row)
+src/plot_severity_2x2.py   Fig. 2 alternative (2x2 grid)
+src/plot_figures.py        Fig. 2 alternative (two separate full-width figures)
 src/ipfp_limit_check.py    IPFP cap check
 experiments/*.sh           the runs behind the paper
 results/runs/<cell>/       summary.csv per cell (tail-500 statistics per rule and seed)
