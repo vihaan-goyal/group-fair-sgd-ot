@@ -93,8 +93,8 @@ interpreter used by the shell scripts.
 
 ## Data
 
-See [`data/README.md`](data/README.md). Adult is included. The IMDb-Wiki files are derived from a dataset licensed for
-non-commercial research only, so they are not redistributed here.
+See [`data/README.md`](data/README.md). Both datasets are included; the IMDb-Wiki files fall under IMDb-Wiki's
+non-commercial research terms.
 
 ## Layout
 

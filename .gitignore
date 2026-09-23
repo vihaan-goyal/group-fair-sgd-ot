@@ -7,5 +7,3 @@ results/runs/**/*.csv
 !results/runs/**/summary.csv
 results/runs/**/*.npz
 results/runs/default/
-data/imdb_wiki.csv
-data/imdb_embeddings.npy
