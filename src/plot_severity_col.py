@@ -17,9 +17,9 @@ LBL = {"fedavot": "GAVOT", "fedavg": "group-blind avg.", "full": "full"}
 STEP = {"const": r"constant $\eta$", "decay1000": r"decaying $\eta_t$"}
 rows = list(csv.DictReader(open("results/tables/severity_sweep_table.csv")))
 
-fig = plt.figure(figsize=(3.4, 5.9))
-gs = fig.add_gridspec(5, 1, height_ratios=[1, 1, 0.38, 1, 1], hspace=0.42,
-                      left=0.185, right=0.975, top=0.955, bottom=0.10)
+fig = plt.figure(figsize=(3.4, 6.1))
+gs = fig.add_gridspec(5, 1, height_ratios=[1, 1, 0.22, 1, 1], hspace=0.36,
+                      left=0.185, right=0.975, top=0.96, bottom=0.095)
 a0 = fig.add_subplot(gs[0]); a2 = fig.add_subplot(gs[3])
 axes = [a0, fig.add_subplot(gs[1], sharex=a0, sharey=a0), a2, fig.add_subplot(gs[4], sharex=a2, sharey=a2)]
 panels = [("imdbwiki", "const"), ("imdbwiki", "decay1000"), ("adult", "const"), ("adult", "decay1000")]
@@ -48,6 +48,8 @@ for k, (ax, (ds, tag)) in enumerate(zip(axes, panels)):
         ax.invert_xaxis(); ax.set_xticks(x)
         ax.set_xticklabels([rf"{float(r['beta']):g}" "\n" rf"{float(r['infeasible_mass']):.2f}" for r in pts])
         ax.set_xlabel(r"skew $\beta$ (upper), infeasible mass $\nu$ (lower)", fontsize=FS, labelpad=2)
+    if ds == "imdbwiki":
+        ax.set_xticks([30, 40, 50, 60, 70, 80, 90]); ax.set_xlim(28, 91)
     if k == 1:
         ax.set_xlabel(r"infeasible mass $\nu$ (%)", fontsize=FS, labelpad=2)
 
