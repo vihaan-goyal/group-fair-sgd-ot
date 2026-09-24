@@ -1,5 +1,6 @@
-# Tables 1 and 2 of the paper, and every Welch t quoted in Sec. 5, from the per-cell
-# results/runs/<cell>/summary.csv files (tail-500 mean training loss per seed). No training.
+# Table 1(a) and 1(b) of the paper, and every Welch t quoted in Sec. 4, from the per-cell
+# results/runs/<cell>/summary.csv files (tail-500 mean training loss per seed), plus the nu and
+# alignment-gain (Delta_floor) rows of Table 1(b) from results/tables/severity_sweep_table.csv. No training.
 # Welch t uses the sample standard deviation (ddof = 1) over the 5 seeds.
 # Usage (repo root): python src/paper_tables.py
 import csv, os, statistics as st
@@ -16,10 +17,10 @@ def welch_t(a, b):
     """t of mean(a) - mean(b), sample variances."""
     return (st.mean(a) - st.mean(b)) / (st.variance(a) / len(a) + st.variance(b) / len(b)) ** 0.5
 
-# ---- Table 1: overall F_p, decaying stepsize, four headline instances
+# ---- Table 1(a): overall F_p, decaying stepsize, four headline instances
 T1 = [("Adult, beta=0", "adult_beta0.00_decay1000", 4), ("Adult, beta=1", "adult_beta1.00_decay1000", 4),
       ("IMDb, beta=0", "imdb_beta0.00_decay1000", 2), ("IMDb, aligned", "imdb_feasible_decay1000", 2)]
-print("Table 1  mean tail-500 F_p over 5 seeds (decaying stepsize)")
+print("Table 1(a)  mean tail-500 F_p over 5 seeds (decaying stepsize)")
 print(f"{'instance':15s}" + "".join(f"{NAME[m]:>18s}" for m in ["fedavot", "fedavg", "ipw", "lds", "full"])
       + f"{'t vs avg':>10s}{'t vs ups':>10s}")
 for label, cell, d in T1:
@@ -29,15 +30,19 @@ for label, cell, d in T1:
     t_ups = welch_t(vals["ipw"], vals["fedavot"]) if vals["ipw"] else float("nan")
     print(line + f"{t_avg:>10.1f}{t_ups:>10.1f}")
 
-# ---- Table 2: IMDb-Wiki severity sweep, decaying stepsize, gain = group-blind - GAVOT
-print("\nTable 2  IMDb-Wiki, decaying stepsize: Welch t of the gain (group-blind avg. - GAVOT)")
+# ---- Table 1(b): IMDb-Wiki severity sweep, decaying stepsize, gain = group-blind - GAVOT
+# nu and Delta_floor = floor(group-blind) - floor(GAVOT) come from the exact floors (src/build_tables.py)
+SEV = {f"{float(r['beta']):.2f}": r for r in csv.DictReader(open("results/tables/severity_sweep_table.csv"))
+       if r["dataset"] == "imdbwiki" and r["regime"] == "infeasible" and r["tag"] == "decay1000"}
+print("\nTable 1(b)  IMDb-Wiki, decaying stepsize: nu, alignment gain Delta_floor, gain (group-blind avg. - GAVOT), Welch t")
 for b in ["0.00", "0.50", "1.00", "1.50", "2.00", "3.00"]:
     cell = f"imdb_beta{b}_decay1000"
     ot, avg = tails(cell, "fedavot"), tails(cell, "fedavg")
-    print(f"beta={float(b):<4g} GAVOT {st.mean(ot):6.2f}  avg {st.mean(avg):6.2f}  "
+    dfloor = float(SEV[b]["floor_fedavg"]) - float(SEV[b]["floor_fedavot"])
+    print(f"beta={float(b):<4g} nu {float(SEV[b]['infeasible_mass']):.2f}  Delta_floor {dfloor:5.2f}  GAVOT {st.mean(ot):6.2f}  avg {st.mean(avg):6.2f}  "
           f"gain {st.mean(avg) - st.mean(ot):+5.2f}  t {welch_t(avg, ot):+5.1f}")
 
-# ---- Sec. 5, mean-CVaR layer: best (alpha, gamma) grid point per headline cell, and the worst race on Adult
+# ---- Sec. 4, mean-CVaR layer: best (alpha, gamma) grid point per headline cell, and the worst race on Adult
 print("\nMean-CVaR grid (fedavot_cvar), decaying stepsize, PAPER convention (paper gamma = 1 - code gamma):")
 pg = lambda k: f"(alpha={k[0]:g}, gamma={1 - k[1]:.1f})"
 for label, cell, d in T1:

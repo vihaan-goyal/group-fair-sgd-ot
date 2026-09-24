@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Severity sweep behind Tables 1-2 and Figs. 2-4: the grid-free rules, 5 seeds, 4000 steps,
+# Severity sweep behind Table 1(a,b), Fig. 2 and the repository severity figures: the grid-free rules, 5 seeds, 4000 steps,
 # constant and decaying stepsize (eta_t = eta / (1 + t/1000)), one output folder per cell.
 #   imdbwiki: sigma_i ~ i^beta,   beta in {0, .5, 1, 1.5, 2, 3}  (nu = 0.31 ... 0.88)
 #             plus the aligned instance sigma_i ~ 101 - i        (--regimes feasible, nu = 0)

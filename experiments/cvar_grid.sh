@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Mean-CVaR layer (Sec. 4-5): full 10x10 (alpha, gamma) grid for fedavot_cvar and fedcvar on the four
+# Mean-CVaR layer (Sec. 3, results in Sec. 4): full 10x10 (alpha, gamma) grid for fedavot_cvar and fedcvar on the four
 # headline cells, decaying stepsize, 5 seeds. Writes into the severity-sweep cell folders.
 # Usage (repo root):  bash experiments/cvar_grid.sh
 set -u

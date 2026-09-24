@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Imbalance baselines of Table 1 on the four headline cells, decaying stepsize:
+# Imbalance baselines of Table 1(a) on the four headline cells, decaying stepsize:
 # fixed multiplier m/K (fedavg_mk), upsampling (ipw) and downsampling on all four, LDS on the two IMDb-Wiki cells (regression only).
 # Writes into the same cell folders as severity_sweep.sh (--no-clobber keeps existing runs).
 # Usage (repo root):  bash experiments/baselines.sh

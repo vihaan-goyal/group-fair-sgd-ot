@@ -7,3 +7,4 @@ results/runs/**/*.csv
 !results/runs/**/summary.csv
 results/runs/**/*.npz
 results/runs/default/
+figures/*.png

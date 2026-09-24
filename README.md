@@ -32,7 +32,7 @@ python src/plot_severity_col.py # figures/severity_col.pdf (severity sweeps, rep
 | Paper | What | Produced by | Reads |
 |---|---|---|---|
 | Table 1(a) | overall $F_p$ on the four headline instances, all rules | `src/paper_tables.py` | `results/runs/*/summary.csv` |
-| Table 1(b) | IMDb-Wiki sweep, alignment gain and Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
+| Table 1(b) | IMDb-Wiki sweep: $\nu$, alignment gain $\Delta_{\mathrm{floor}}$, measured gain over group-blind averaging and its Welch $t$ | `src/paper_tables.py` | same, plus `results/tables/severity_sweep_table.csv` |
 | Sec. 4 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
 | severity curves (repo only) | both severity sweeps, four stacked panels: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_col.py` | `results/tables/severity_sweep_table.csv` |
 | (same, split) | the same sweeps as two full-width figures | `src/plot_figures.py` | same |
@@ -94,7 +94,8 @@ python src/plot_severity_col.py
 python src/plot_rare_group.py
 ```
 
-Everything runs on a CPU. `src/run_experiments.py --help` lists all options; `--smoke` gives a one-minute IMDb-Wiki check and
+Everything runs on a CPU. One cell (5 seeds, 4000 steps, GAVOT / group-blind / full) takes about 3 minutes on Adult
+and 6 minutes on IMDb-Wiki on a laptop. `src/run_experiments.py --help` lists all options; `--smoke` gives a one-minute IMDb-Wiki check and
 `--selftest` checks the vectorized engine. Raw per-step CSVs (`*.csv.gz`, about 1.2 GB for the full sweep) and
 cached transport plans are git-ignored. Only `summary.csv` per cell is committed. Set `PYTHON=...` to choose the
 interpreter used by the shell scripts.
