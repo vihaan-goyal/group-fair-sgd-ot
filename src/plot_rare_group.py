@@ -18,7 +18,7 @@ def pick(ds, grp, mdl):
     return [r for r in rare if r["dataset"] == ds and r["group"] == grp and r["tag"] == "decay1000"
             and r["model"] == mdl and r["regime"] == "infeasible"]
 
-fig, axes = plt.subplots(1, 2, figsize=(5.95, 2.0))
+fig, axes = plt.subplots(1, 2, figsize=(5.95, 1.35))
 for ax, ds, grp in [(axes[0], "adult", "Other"), (axes[1], "imdbwiki", "tier1")]:
     for mdl in ["full", "fedavg", "fedavot"]:
         pts = pick(ds, grp, mdl)
@@ -35,9 +35,9 @@ for ax, ds, grp in [(axes[0], "adult", "Other"), (axes[1], "imdbwiki", "tier1")]
         ax.set_xlabel(r"skew $\beta$ (upper), infeasible mass $\nu$ (lower)", fontsize=FS, labelpad=2)
         ax.set_title("Adult, race Other", fontsize=FS, pad=3)
         ax.set_ylabel("cross-entropy", fontsize=FS, labelpad=2)
-        ax.set_ylim(0.0, 0.16)
+        ax.set_ylim(0.0, 0.2)
         h, l = ax.get_legend_handles_labels()
-        ax.legend(h[::-1], l[::-1], loc="upper left", fontsize=FS, framealpha=0.9, handlelength=1.6, handletextpad=0.4,
+        ax.legend(h[::-1], l[::-1], loc="upper center", ncol=3, fontsize=FS, framealpha=0.9, handlelength=1.4, handletextpad=0.3, columnspacing=0.8,
                   borderpad=0.3, labelspacing=0.2)
     else:
         ax.set_xticks([30, 40, 50, 60, 70, 80, 90]); ax.set_xlim(28, 91)
