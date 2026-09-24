@@ -11,8 +11,9 @@ distribution. When the target is reachable (every $p_i \le r_i$, $r_i$ = inclusi
 $F_p$ exactly. When it is not, transport converges to the closest reachable surrogate $\hat p$. The *infeasible mass*
 $\nu=\sum_{p_i>r_i}p_i$ measures how far the target is out of reach.
 
-Everything in Sec. 5 of the paper (Tables 1–2, Figs. 2–3, every quoted number and $t$ statistic) comes from this
-repository.
+Everything in Sec. 4 of the paper (Table 1, Fig. 2, every quoted number and $t$ statistic) comes from this
+repository, which also holds what the paper had no room for: the per-skew severity curves, the constant-stepsize
+runs and the full mean–CVaR $(\alpha,\gamma)$ grid.
 
 ## Quick start: tables and figures without training
 
@@ -21,21 +22,21 @@ in `results/tables/`. So the paper's numbers and plots regenerate in seconds:
 
 ```bash
 pip install -r requirements.txt
-python src/paper_tables.py     # Table 1, Table 2, all Welch t, the mean-CVaR grid results
-python src/plot_severity_col.py # figures/severity_col.pdf (Fig. 2)
-python src/plot_rare_group.py  # figures/rare_group_fit.pdf (Fig. 3)
+python src/paper_tables.py      # Table 1(a) and 1(b), all Welch t, the mean-CVaR grid results
+python src/plot_rare_group.py   # figures/rare_group_fit.pdf (Fig. 2)
+python src/plot_severity_col.py # figures/severity_col.pdf (severity sweeps, repository only)
 ```
 
 ## Where each result comes from
 
 | Paper | What | Produced by | Reads |
 |---|---|---|---|
-| Table 1 | overall $F_p$ on the four headline instances, all rules | `src/paper_tables.py` | `results/runs/*/summary.csv` |
-| Table 2 | IMDb-Wiki sweep, Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
-| Sec. 5 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
-| Fig. 2 | both severity sweeps, four stacked panels: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_col.py` | `results/tables/severity_sweep_table.csv` |
-| (Fig. 2, split) | the same sweeps as two full-width figures | `src/plot_figures.py` | same |
-| Fig. 3 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_rare_group.py` | `results/tables/rare_group_table.csv` |
+| Table 1(a) | overall $F_p$ on the four headline instances, all rules | `src/paper_tables.py` | `results/runs/*/summary.csv` |
+| Table 1(b) | IMDb-Wiki sweep, alignment gain and Welch $t$ of the gain over group-blind averaging | `src/paper_tables.py` | same |
+| Sec. 4 text | $t$ statistics, mean-CVaR grid optimum, worst-race losses | `src/paper_tables.py` | same |
+| severity curves (repo only) | both severity sweeps, four stacked panels: IMDb-Wiki vs $\nu$, Adult vs $\beta$, constant and decaying stepsize, with floors $\Phi$ | `src/plot_severity_col.py` | `results/tables/severity_sweep_table.csv` |
+| (same, split) | the same sweeps as two full-width figures | `src/plot_figures.py` | same |
+| Fig. 2 | loss on the least represented group (Adult race Other, IMDb-Wiki top tier) | `src/plot_rare_group.py` | `results/tables/rare_group_table.csv` |
 | floors $\Phi$, $\nu$, $\hat p$ | exact loss floor each rule converges toward | `src/build_tables.py` + `src/transport_floors.py` | raw runs + data |
 | IPFP cap | 1000 IPFP sweeps already give the limiting $\hat p$ | `src/ipfp_limit_check.py` | data |
 
@@ -70,8 +71,13 @@ The code grew out of a federated-learning codebase, so rule names in the code an
 | `ipw` | upsampling (self-normalized $p_i/r_i$) |
 | `downsample` | downsampling ($\min(p_i/r_i,1)$, renormalized) |
 | `lds` | LDS, label distribution smoothing (Yang et al., ICML 2021) |
-| `fedavot_cvar` / `fedcvar` | mean–CVaR layer on GAVOT / on group-blind averaging, $(\alpha,\gamma)$ grid |
+| `fedavot_cvar` / `fedcvar` | mean–CVaR layer on GAVOT / on group-blind averaging, $(\alpha,\gamma)$ grid (see the note below) |
 | `full` | full access (every group every step, weighted by $p$) |
+
+**CVaR convention.** The paper uses the FedeRage convention, $F^{\alpha,\gamma}_w=(1-\gamma)F_w+\gamma\,\mathrm{CVaR}^w_\alpha$,
+so $\gamma=0$ is risk-neutral. The code and every CSV use the opposite weighting: the column `gamma` multiplies the mean,
+and `gamma=1` is risk-neutral. So **paper $\gamma$ = 1 − code `gamma`** (same $\alpha$). For example, the paper's
+$(\alpha,\gamma)=(0.2,0.3)$ is the code's `alpha=0.2, gamma=0.7`.
 
 Cell folders are named `<dataset>_beta<β>_<stepsize>`, e.g. `imdb_beta0.00_decay1000`. `imdb_feasible_*` is the aligned
 IMDb-Wiki instance.
@@ -104,12 +110,12 @@ non-commercial research terms.
 src/run_experiments.py     training runner (all rules, vectorized over configs)
 src/transport_floors.py    p_hat, p_tilde, nu and exact floors from a cached transport plan
 src/build_tables.py        raw runs -> results/tables/*.csv
-src/paper_tables.py        Tables 1-2, Welch t, CVaR grid results
-src/plot_severity_col.py   Fig. 2 (paper version, one column)
-src/plot_rare_group.py     Fig. 3
-src/plot_severity_1x4.py   Fig. 2 alternative (1x4 row)
-src/plot_severity_2x2.py   Fig. 2 alternative (2x2 grid)
-src/plot_figures.py        Fig. 2 alternative (two separate full-width figures)
+src/paper_tables.py        Table 1(a,b), Welch t, CVaR grid results
+src/plot_rare_group.py     Fig. 2
+src/plot_severity_col.py   severity sweeps, one column (repository figure)
+src/plot_severity_1x4.py   severity sweeps, 1x4 row
+src/plot_severity_2x2.py   severity sweeps, 2x2 grid
+src/plot_figures.py        severity sweeps, two full-width figures
 src/ipfp_limit_check.py    IPFP cap check
 experiments/*.sh           the runs behind the paper
 results/runs/<cell>/       summary.csv per cell (tail-500 statistics per rule and seed)

@@ -38,7 +38,8 @@ for b in ["0.00", "0.50", "1.00", "1.50", "2.00", "3.00"]:
           f"gain {st.mean(avg) - st.mean(ot):+5.2f}  t {welch_t(avg, ot):+5.1f}")
 
 # ---- Sec. 5, mean-CVaR layer: best (alpha, gamma) grid point per headline cell, and the worst race on Adult
-print("\nMean-CVaR grid (fedavot_cvar), decaying stepsize: grid point minimizing F_p, and at gamma = 1")
+print("\nMean-CVaR grid (fedavot_cvar), decaying stepsize, PAPER convention (paper gamma = 1 - code gamma):")
+pg = lambda k: f"(alpha={k[0]:g}, gamma={1 - k[1]:.1f})"
 for label, cell, d in T1:
     rows = [r for r in csv.DictReader(open(os.path.join(RUNS, cell, "summary.csv"))) if r["model"] == "fedavot_cvar"]
     by = {}
@@ -47,11 +48,11 @@ for label, cell, d in T1:
     mean = lambda key, col: st.mean(float(r[col]) for r in by[key])
     best = min(by, key=lambda k: mean(k, "overall_tail"))
     g1 = min((k for k in by if k[1] == 1.0), key=lambda k: mean(k, "overall_tail"))
-    print(f"{label:15s} best (a,g)={best} F_p={mean(best, 'overall_tail'):.{d}f}   "
-          f"best on gamma=1 {g1} F_p={mean(g1, 'overall_tail'):.{d}f}")
+    print(f"{label:15s} best {pg(best)} F_p={mean(best, 'overall_tail'):.{d}f}   "
+          f"best risk-neutral (gamma=0) {pg(g1)} F_p={mean(g1, 'overall_tail'):.{d}f}")
     if cell == "adult_beta0.00_decay1000":
         wb = min(by, key=lambda k: mean(k, "worst_group_tail"))
         w = lambda m: st.mean(float(r["worst_group_tail"]) for r in csv.DictReader(open(os.path.join(RUNS, cell, "summary.csv")))
                               if r["model"] == m and not r["alpha"])
-        print(f"{'':15s} worst race: CVaR best {wb} {mean(wb, 'worst_group_tail'):.4f}, "
+        print(f"{'':15s} worst race: CVaR best {pg(wb)} {mean(wb, 'worst_group_tail'):.4f}, "
               f"GAVOT {w('fedavot'):.4f}, group-blind {w('fedavg'):.4f}")
